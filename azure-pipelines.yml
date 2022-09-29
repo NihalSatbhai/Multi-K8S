@@ -11,21 +11,17 @@ steps:
 
 - task: DownloadSecureFile@1
   displayName: 'Download multi-k8s.json'
+  name: mySecureFile
   inputs:
     secureFile: 'multi-k8s.json'
     retryCount: '3'
 
-- task: CmdLine@2
-  displayName: 'CMD'
-  inputs:
-    script: 'ls'
-    workingDirectory: '$(Agent.BuildDirectory)'
 
-# - task: CmdLine@2
-#   displayName: 'GCloud Login'
-#   inputs:
-#     script: 'gcloud auth activate-service-account --key-file multi-k8s.json'
-#     workingDirectory: '$(Build.SourcesDirectory)'
+- task: CmdLine@2
+  displayName: 'GCloud Login'
+  inputs:
+    script: 'gcloud auth activate-service-account --key-file $(mySecureFile.secureFilePath)'
+    workingDirectory: '$(Build.SourcesDirectory)'
 
 # - task: ArchiveFiles@2
 #   inputs:
