@@ -4,15 +4,24 @@ trigger:
 pool: Azure Pipelines
 
 steps:
-- task: ArchiveFiles@2
+- task: GoogleCloudSdkInstaller@0
   inputs:
-    rootFolderOrFile: '$(Build.SourcesDirectory)'
-    includeRootFolder: false
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildNumber).zip'
-    replaceExistingArchive: true
+    version: '306.0.0'
+
+- task: CmdLine@2
+  inputs:
+    script: 'gcloud components update kubectl'
+    workingDirectory: '$(Build.SourcesDirectory)'
+
+# - task: ArchiveFiles@2
+#   inputs:
+#     rootFolderOrFile: '$(Build.SourcesDirectory)'
+#     includeRootFolder: false
+#     archiveType: 'zip'
+#     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildNumber).zip'
+#     replaceExistingArchive: true
     
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact: drop'
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildNumber).zip'
+# - task: PublishBuildArtifacts@1
+#   displayName: 'Publish Artifact: drop'
+#   inputs:
+#     PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildNumber).zip'
