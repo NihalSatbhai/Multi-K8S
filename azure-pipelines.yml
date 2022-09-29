@@ -18,7 +18,7 @@ steps:
 - task: CmdLine@2
   displayName: 'GCloud Help'
   inputs:
-    script: 'gcloud help'
+    script: 'gcloud auth activate-service-account --key-file multi-k8s.json'
     workingDirectory: '$(Build.SourcesDirectory)'
 
 # - task: ArchiveFiles@2
