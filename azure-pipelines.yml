@@ -42,5 +42,6 @@ steps:
   inputs:
     script: |
       export SHA=$(git rev-parse HEAD)
+      chmod +x deploy.sh
       ./deploy.sh
     workingDirectory: '$(Build.SourcesDirectory)'
