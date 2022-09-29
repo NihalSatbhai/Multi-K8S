@@ -5,22 +5,27 @@ pool: Azure Pipelines
 
 steps:
 - task: GoogleCloudSdkInstaller@0
-  displayName: 'GCP SDK Install'
+  displayName: 'Google Cloud SDK Install'
   inputs:
     version: '306.0.0'
 
 - task: DownloadSecureFile@1
-  displayName: 'Download multi-k8s.json'
+  displayName: 'Download service-account.json'
   name: mySecureFile
   inputs:
-    secureFile: 'multi-k8s.json'
+    secureFile: '$(service_account_filename)'
     retryCount: '3'
-
 
 - task: CmdLine@2
   displayName: 'GCloud Login'
   inputs:
-    script: 'gcloud auth activate-service-account --key-file $(mySecureFile.secureFilePath)'
+    script: |
+      CLOUDSDK_CORE_DISABLE_PROMPTS=1
+      gcloud components update kubectl
+      gcloud auth activate-service-account --key-file $(mySecureFile.secureFilePath)
+      gcloud config set project $(project_id)
+      gcloud config set compute/zone $(compute_zone)
+      gcloud container clusters get-credentials $(cluster_name)
     workingDirectory: '$(Build.SourcesDirectory)'
 
 # - task: ArchiveFiles@2
