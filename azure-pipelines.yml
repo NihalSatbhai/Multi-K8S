@@ -20,8 +20,7 @@ steps:
   displayName: 'GCloud Login'
   inputs:
     script: |
-      CLOUDSDK_CORE_DISABLE_PROMPTS=1
-      gcloud components update kubectl
+      gcloud components update kubectl -q
       gcloud auth activate-service-account --key-file $(mySecureFile.secureFilePath)
       gcloud config set project $(project_id)
       gcloud config set compute/zone $(compute_zone)
