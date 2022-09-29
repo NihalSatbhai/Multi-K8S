@@ -37,6 +37,21 @@ steps:
       docker run -e CI=true $(DOCKER_USERNAME)/react-test npm test
     workingDirectory: '$(Build.SourcesDirectory)'
 
+- task: replacetokens@5
+  displayName: 'Replace variables in deploy.sh'
+  inputs:
+    targetFiles: 'deploy.sh'
+    encoding: 'utf-8'
+    tokenPattern: 'azpipelines'
+    writeBOM: true
+    actionOnMissing: 'warn'
+    keepToken: false
+    actionOnNoFiles: 'continue'
+    enableTransforms: false
+    enableRecursion: false
+    useLegacyPattern: false
+    enableTelemetry: true
+
 - task: CmdLine@2
   displayName: 'Kubernetes Deployment'
   inputs:
