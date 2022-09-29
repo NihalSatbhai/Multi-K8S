@@ -26,14 +26,15 @@ steps:
       gcloud config set project $(project_id)
       gcloud config set compute/zone $(compute_zone)
       gcloud container clusters get-credentials $(cluster_name)
-      echo "$(DOCKER_PASSWORD)" | docker login -u "$(DOCKER_USERNAME)" --password-stdin
-      docker build -t $(DOCKER_USERNAME)/react-test -f ./client/Dockerfile.dev ./client
     workingDirectory: '$(Build.SourcesDirectory)'
 
 - task: CmdLine@2
   displayName: 'Run TestCases'
   inputs:
-    script: 'docker run $(DOCKER_USERNAME)/react-test npm test -- --coverage'
+    script: |
+      echo "$(DOCKER_PASSWORD)" | docker login -u "$(DOCKER_USERNAME)" --password-stdin
+      docker build -t $(DOCKER_USERNAME)/react-test -f ./client/Dockerfile.dev ./client
+      docker run -e CI=true $(DOCKER_USERNAME)/react-test npm test
     workingDirectory: '$(Build.SourcesDirectory)'
 
 - task: CmdLine@2
