@@ -9,6 +9,12 @@ steps:
   inputs:
     version: '306.0.0'
 
+- task: DownloadSecureFile@1
+  displayName: 'Download multi-k8s.json'
+  inputs:
+    secureFile: 'multi-k8s.json'
+    retryCount: '3'
+
 - task: CmdLine@2
   displayName: 'GCloud Help'
   inputs:
