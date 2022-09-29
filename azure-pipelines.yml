@@ -16,10 +16,16 @@ steps:
     retryCount: '3'
 
 - task: CmdLine@2
-  displayName: 'GCloud Help'
+  displayName: 'CMD'
   inputs:
-    script: 'gcloud auth activate-service-account --key-file multi-k8s.json'
-    workingDirectory: '$(Build.SourcesDirectory)'
+    script: 'ls'
+    workingDirectory: '$(Agent.BuildDirectory)'
+
+# - task: CmdLine@2
+#   displayName: 'GCloud Login'
+#   inputs:
+#     script: 'gcloud auth activate-service-account --key-file multi-k8s.json'
+#     workingDirectory: '$(Build.SourcesDirectory)'
 
 # - task: ArchiveFiles@2
 #   inputs:
