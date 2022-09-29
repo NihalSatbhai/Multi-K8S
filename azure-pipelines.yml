@@ -10,7 +10,7 @@ steps:
 
 - task: CmdLine@2
   inputs:
-    script: 'gcloud components update kubectl -y'
+    script: 'gcloud components list'
     workingDirectory: '$(Build.SourcesDirectory)'
 
 # - task: ArchiveFiles@2
