@@ -1,3 +1,5 @@
+#!/bin/bash
+
 docker build -t $(DOCKER_USERNAME)/multi-client-k8s:latest -t $(DOCKER_USERNAME)/multi-client-k8s:$SHA -f ./client/Dockerfile ./client
 docker build -t $(DOCKER_USERNAME)/multi-server-k8s-pgfix:latest -t $(DOCKER_USERNAME)/multi-server-k8s-pgfix:$SHA -f ./server/Dockerfile ./server
 docker build -t $(DOCKER_USERNAME)/multi-worker-k8s:latest -t $(DOCKER_USERNAME)/multi-worker-k8s:$SHA -f ./worker/Dockerfile ./worker
