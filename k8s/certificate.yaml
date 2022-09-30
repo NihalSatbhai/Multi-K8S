@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+ 
+kind: Certificate
+metadata:
+  name: multi-k8s-cloudns-nz-tls
+spec:
+  secretName: multi-k8s-cloudns-nz
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: multi-k8s.cloudns.nz
+  dnsNames:
+    - multi-k8s.cloudns.nz
